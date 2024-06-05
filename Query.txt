@@ -1,0 +1,741 @@
+q1
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Team> Teams = em.createNamedQuery("Team.findAll").getResultList();
+        System.out.println("First Query: Teasms");
+        System.out.format("%10s %40s %25s %25s\n","Team Name","Start Date", "Home Kit","Away Kit");
+        for(Team team : Teams)
+        {
+            System.out.format("%10s %40s %25s %25s\n",team.getTname(),team.getTstartdate(), team.getThomekit(),team.getTawaykit());
+        }
+
+
+    }
+    
+}
+
+-----------------------------------------------------
+q2
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Player> Players = em.createNamedQuery("Player.findAll").getResultList();
+        System.out.println("Second Query: PLayers");
+        System.out.format("%10s %10s %10s %10s %10s\n","Player Name","Player Number","Nationalty", "Position","Salary");
+        for(Player Player : Players)
+        {
+            if("Man_city".equals(Player.getTeamTname().getTname()))
+            {
+                System.out.format("%10s %10s %10s %10s %10s\n",
+                        Player.getPname(),Player.getPno(),Player.getPnationalty(),Player.getPosition(),Player.getPsalary());
+            }     
+        }
+    }
+    
+}
+------------------------------------------------------------------------------------------------------------------
+q3
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Coach> Coachs = em.createNamedQuery("Coach.findAll").getResultList();
+        System.out.println("Third Query: Coachs");
+        System.out.format("%20s %20s\n","Coach Name", "Nationalty");
+        for(Coach Coach : Coachs)
+        {   
+            if(Coach.getCnathionalty().equals("Egyption"))
+                System.out.format("%20s %20s\n",Coach.getCname(),Coach.getCnathionalty());  
+        }
+    }
+    
+}
+----------------------------------------------------------------------------------------------------------------------------
+q4
+
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<AchivmentTeam> AchivmentTeams = em.createNamedQuery("AchivmentTeam.findAll").getResultList();
+        System.out.println("Fourth Query");
+        System.out.format("%20s %20s %20s\n","Team Name","Prize Name", "Prize Number");
+        for(AchivmentTeam achivmentTeam : AchivmentTeams)
+        {
+            if(achivmentTeam.getAname().equals("FA_cup") && achivmentTeam.getAnoChampion() > 6)
+            {
+                System.out.format("%20s %20s %20s\n",achivmentTeam.getTeamTname().getTname(),achivmentTeam.getAname(),achivmentTeam.getAnoChampion());
+            }
+        }
+
+
+    }
+    
+}
+--------------------------------------------------------------------------------------------------------------------------------
+q5
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Game> Games = em.createNamedQuery("Game.findAll").getResultList();
+        System.out.println("Fourth Query");
+        System.out.format("%10s %35s %15s %10s %15s %10s\n","Game Number","Game Date", "Thome" , "Hscore", "Taway","Ascore" , "Reffrree SSN");
+        for(Game Game : Games)
+        {
+            if(Game.getHscore().equals("2") && Game.getAscore().equals("1"))
+            {
+                System.out.format("%10s %35s %15s %10s %15s %10s\n",
+                        Game.getGno(),Game.getGDate(),
+                        Game.getTHome().getTname(),Game.getHscore(),
+                        Game.getTaway().getTname(),Game.getAscore(),
+                        Game.getRefrreeRssn());
+            }
+        }
+
+
+    }
+    
+}
+---------------------------------------------------------------------------------
+q6
+
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<AchinmentPlayer> AchinmentPlay = em.createNamedQuery("AchinmentPlayer.findAll").getResultList();
+        System.out.format("%20s %20s\n","Prize Name","Player Name");
+        for(AchinmentPlayer AchinmentPlayer : AchinmentPlay)
+        {
+                System.out.format("%20s %20s\n",AchinmentPlayer.getAPname(),AchinmentPlayer.getPlayerPssn().getPname());
+        }
+
+
+    }
+    
+}
+-------------------------------------------------------------------------------------------------------------
+q7
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Punish> punish = em.createNamedQuery("Punish.findAll").getResultList();
+        System.out.format("%20s %20s %20s\n","Game Number", "Refrree Name","Player Name");
+        for(Punish pun : punish)
+        {
+            if(pun.getYellowCard().equals("1"))
+            {
+                System.out.format("%20s %20s %20s\n", pun.getGame().getGno() , pun.getRefrree().getRname(),pun.getPlayer().getPname());
+            }
+        }        
+    }
+}
+-----------------------------------------------------------------------------------------
+q8
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Score> Players = em.createNamedQuery("Score.findAll").getResultList();
+        System.out.format("%20s %7s %7s %7s %7s\n","Player Name" , "Position", "Goal", "Assists","Game Week");
+        for(Score play : Players)
+        {
+            if(play.getPlayerPssn().getPname().equals("Zenhom") || play.getPlayerPssn().getPname().equals("Omar_elqady"))
+            {
+                System.out.format("%20s %7s %7s %7s %7s\n", 
+                        play.getPlayerPssn().getPname(), play.getPlayerPssn().getPosition(),
+                        play.getSgoal(), play.getSassist(),
+                        play.getGameGno().getGno()
+                        );
+            }
+        }        
+    }
+}
+------------------------------------------------------------------------------------
+q9
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<StadiumGame> stad = em.createNamedQuery("StadiumGame.findAll").getResultList();
+        System.out.format("%20s %20s %7s\n","Stadium Name" , "Team Name","Game Week");
+        for(StadiumGame st : stad)
+        {
+            if(st.getStadium().getSname().equals("Old_trafford") && st.getGame().getAscore() > st.getGame().getHscore())
+            {
+                System.out.format("%20s %20s %7s\n", 
+                        st.getStadium().getSname(),st.getGame().getTaway().getTname() , st.getGame().getGno()
+                        );
+            }
+        }        
+    }
+}
+-------------------------------------------------------------------
+q10
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<AchinmentPlayer> Aplayers = em.createNamedQuery("AchinmentPlayer.findAll").getResultList();
+        System.out.format("%20s %20s %20s %20s\n","Player Name" ,"Prize Name", "Team Name","Coach Name");
+        for(AchinmentPlayer p : Aplayers)
+        {
+            if(p.getPlayerPssn().getPsalary() >= 25000 && p.getPlayerPssn().getPsalary() <= 60000)
+            {
+                System.out.format("%20s %20s %20s %20s\n", 
+                        p.getPlayerPssn().getPname(),p.getAPname(),
+                        p.getPlayerPssn().getTeamTname().getTname(),
+                        p.getPlayerPssn().getTeamTname().getCocheCssn().getCname()
+                        );
+            }
+        }        
+    }
+}
+---------------------------------------------------------------------------------------
+q11
+
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List capacity = em.createNamedQuery("Stadium.findCapacityTeam").setParameter("scapacity", 65000).getResultList();
+        System.out.format("%20s\n","Number of team" );
+        for(Object object : capacity)
+        {
+                System.out.format("%20s\n",object);
+        }        
+    }
+}
+-------------------------------------------------------------------------------------
+q12
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        int total = 0;
+        String name = "";
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Score> sum = em.createNamedQuery("Score.findAll").getResultList();
+        System.out.format("%20s %20s\n","All Number Assist" , "Player Name" );
+        for(Score s : sum)
+        {
+                if(s.getPlayerPssn().getPssn().equals("404"))
+                {
+                    total += Integer.parseInt(s.getSassist());
+                    name = s.getPlayerPssn().getPname();
+                }
+        }        
+         System.out.format("%20s %20s\n",total , name );
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------------------------
+q13
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        int tArsenal = 0, tCity = 0, tscince = 0, tunited = 0;
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Score> sum = em.createNamedQuery("Score.findAll").getResultList();
+        System.out.format("%20s %20s\n","All Number Goal" , "Team Name" );
+        for(Score s : sum)
+        {
+            String str = s.getPlayerPssn().getPssn().substring(0,1);
+            try {
+                int goals = Integer.parseInt(s.getSgoal());
+                if(str.equals("1")) 
+                {
+                    tArsenal += goals;
+                } 
+                else if(str.equals("2"))
+                {
+                    tCity += goals;
+                } 
+                else if(str.equals("3"))
+                {
+                    tunited += goals;
+                } 
+                else if(str.equals("4")) 
+                {
+                    tscince += goals;
+                }
+            } catch (NumberFormatException e)
+            {
+                // Handle the error, log it, or set a default value
+                 //System.out.println("Error parsing goals for player: " + s.getPlayerPssn().getPssn());
+            }
+        }        
+         System.out.format("%20s %20s\n",tArsenal , "Arsenal" );
+         System.out.format("%20s %20s\n",tCity , "Man_city" );
+         System.out.format("%20s %20s\n",tunited , "Man_united" );
+         System.out.format("%20s %20s\n",tscince , "Scient_soccer" );
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------
+q14
+
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        int tArsenal = 0, tCity = 0 , tunited =0, tscince = 0;
+        String name = "";
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Player> avg = em.createNamedQuery("Player.findAll").getResultList();
+        System.out.format("%20s %20s\n","Average Salary" , "Team Name" );
+        for(Player a : avg)
+        {
+        String str = a.getPssn().substring(0,1);
+        try {
+            int salary = a.getPsalary();
+            if(str.equals("1")) 
+            {
+                tArsenal += salary;
+            } 
+            else if(str.equals("2"))
+            {
+                tCity += salary;
+            } 
+            else if(str.equals("3"))
+            {
+                tunited += salary;
+            } 
+            else if(str.equals("4")) 
+            {
+                tscince += salary;
+            }
+            } catch (NumberFormatException e)
+            {
+                // Handle the error, log it, or set a default value
+                 //System.out.println("Error parsing goals for player: " + s.getPlayerPssn().getPssn());
+            }
+
+        }        
+        if(tArsenal / 5 > 40000)
+        {
+            System.out.format("%20s %20s\n",tArsenal / 5 , "Arsenal" );
+        }
+        if(tCity / 5 > 40000)
+        {
+            System.out.format("%20s %20s\n",tCity / 5, "Man_city" );
+        }
+        if(tunited / 5 > 40000)
+        {
+            System.out.format("%20s %20s\n",tunited / 5 , "Man_united" );
+        }
+        if(tscince / 5 > 40000)
+        {
+            System.out.format("%20s %20s\n",tscince / 5 , "Scient_soccer" );
+        }
+
+         
+
+    }
+}
+---------------------------------------------------------------------------------------------------------------
+q15
+
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        int Anthony_taylor = 0, Michael_oliver = 0, Craig_bawson=0, Jarred_jilletg=0 ;
+        int max = 0;
+        String max_name = "";
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Punish> totalcard = em.createNamedQuery("Punish.findAll").getResultList();
+        System.out.format("%20s %20s\n","Refrree Name" , "Most Yellpw Card" );
+        for(Punish t : totalcard)
+        {
+           String str = t.getRefrree().getRssn().substring(2,3);
+        try {
+            int yellowcard = Integer.parseInt(t.getYellowCard());
+            if(str.equals("0")) 
+            {
+                Anthony_taylor += yellowcard;
+                if(Anthony_taylor > max) 
+                {
+                    max = Anthony_taylor;
+                    max_name = "Anthony_taylor";
+                }
+            } 
+            else if(str.equals("1"))
+            {
+                Michael_oliver += yellowcard;
+                if(Michael_oliver > max) 
+                {
+                    max = Michael_oliver;
+                    max_name = "Michael_oliver";
+                }
+            } 
+            else if(str.equals("2"))
+            {
+                Craig_bawson += yellowcard;
+                if(Craig_bawson > max) 
+                {
+                    max = Craig_bawson;
+                    max_name = "Craig_bawson";
+                }
+            } 
+            else if(str.equals("3")) 
+            {
+                Jarred_jilletg += yellowcard;
+                if(Jarred_jilletg > max) 
+                {
+                    max = Jarred_jilletg;
+                    max_name = "Jarred_jilletg";
+                }
+            }
+            } catch (NumberFormatException e)
+            {
+            }
+        }   
+        System.out.format("%20s %20s\n",max_name , max );
+    }
+}
+----------------------------------------------------------------------------------------------
+q16
+package project;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        ArrayList<Integer> sal = new ArrayList<>();
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Player> play = em.createNamedQuery("Player.findAll").getResultList();
+        System.out.format("%20s %20s\n","Salary" , "Number of Player" );
+        for(Player p : play)
+        {
+            sal.add(p.getPsalary());
+            //System.out.format("%20s %20s\n",p.getPsalary() , p );
+        }
+         HashMap<Integer, Integer> countMap = new HashMap<>();
+        for (Integer num : sal)
+        {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+         
+        for (Integer num : countMap.keySet()) 
+        {
+            System.out.format("%20s %20s\n",num , countMap.get(num) );
+        }
+    }
+}
+--------------------------------------------------------------------------------------------------------
+q17
+
+package project;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        ArrayList<Player> ssn = new ArrayList<>();
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<PlayerHasGame> play = em.createNamedQuery("PlayerHasGame.findAll").getResultList();
+        System.out.format("%20s %20s %20s %15s\n","Player Name" , "Team Name", "Nationality","Number of Games" );
+        for(PlayerHasGame p : play)
+        {
+            if(p.getPlayer() != null) 
+            {
+                ssn.add(p.getPlayer());
+            }
+                
+
+        }
+        HashMap<Player, Integer> countMap = new HashMap<>();
+        for (Player num : ssn)
+        {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+        
+        for (Player num : countMap.keySet()) 
+        {
+            System.out.format("%20s %20s %20s %15s\n",
+                    num.getPname(), num.getTeamTname().getTname(),
+                    num.getPnationalty(), countMap.get(num)
+            );
+        }
+
+    }
+}
+-------------------------------------------------------------------------------------------------------
+q18
+
+package project;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        ArrayList<Player> ssn = new ArrayList<>();
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Score> play = em.createNamedQuery("Score.findAll").getResultList();
+        System.out.format("%20s %20s %20s %15s\n","Salary" , "Player Name", "Team Name","Player SSN" );
+        for(Score p : play)
+        {
+            if(p.getPlayerPssn() != null) 
+            {
+                ssn.add(p.getPlayerPssn());
+            }              
+        }
+        HashMap<Player, Integer> countMap = new HashMap<>();
+        for (Player num : ssn)
+        {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+        
+        for (Player num : countMap.keySet()) 
+        {
+            System.out.format("%20s %20s %20s %15s\n",
+                    num.getPsalary(), num.getPname(),
+                    num.getTeamTname().getTname(), num.getPssn()
+            );
+        }
+
+    }
+}
+-----------------------------------------------------------------------------------------
+q19
+
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List sdate = em.createNamedQuery("Team.findmindateTeam").getResultList();
+        List<Stadium> te = em.createNamedQuery("Stadium.findAll").getResultList();
+        System.out.format("%10s %30s %20s %20s %20s\n",
+                "Team Name" , "Start Date", "Stadium Name",
+                "President Name" , "Coach Name" );
+        for(Stadium p : te)
+        {
+            if(p.getTeamTname().getTstartdate().equals(sdate.get(0))) 
+            {
+                System.out.format("%10s %30s %20s %20s %20s\n",
+                p.getTeamTname().getTname() , p.getTeamTname().getTstartdate(), p.getSname(),
+                p.getTeamTname().getPresidentMssn().getMname() ,
+                p.getTeamTname().getCocheCssn().getCname() );
+            }              
+        }      
+    }
+}
+-----------------------------------------------------------------------------------------------
+q20
+
+package project;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    { int x = 0;
+        ArrayList<Integer> sal = new ArrayList<>();
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Player> play = em.createNamedQuery("Player.findAll").getResultList();
+        System.out.format("%20s %20s\n","Player Name" , "Salary" );
+        for(Player p : play)
+        {
+            
+            sal.add(p.getPsalary());
+        }
+         HashMap<Integer, Integer> countMap = new HashMap<>();
+        for (Integer num : sal)
+        {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+         
+        for (Integer num : countMap.keySet()) 
+        {
+            if(countMap.get(num) > 1)
+            {
+                x = num;
+                List<Player> plaay = em.createNamedQuery("Player.findByPsalary").setParameter("psalary", x).getResultList();
+                 for(Player p : plaay)
+                {
+                    System.out.format("%20s %20s\n",p.getPname(), p.getPsalary() );
+                }
+            }
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------
+q21
+package project;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+public class Project
+{
+    public static void main(String[] args)
+    {
+        EntityManager em = Persistence.createEntityManagerFactory("projectPU").createEntityManager();
+        em.getTransaction().begin();
+        List<Punish> punh = em.createNamedQuery("Punish.findAll").getResultList();
+        System.out.format("%20s %10s %10s\n",
+                "Player Name" , "Yellow Card", "Red Card");
+        for(Punish p : punh)
+        {
+             System.out.format("%20s %10s %10s\n",
+                p.getPlayer().getPname() , p.getYellowCard(), p.getRedcard());
+        }      
+    }
+}
